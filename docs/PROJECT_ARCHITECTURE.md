@@ -17,34 +17,34 @@ The application consists of four main parts:
 
 ```text
 ┌─────────────────────────────┐
-│        User / Browser          │
-│                                │
-│      Writing Interface         │
-│                                │
-│  - Text Input                  │
-│  - Writing Operations          │
-│  - Generation Settings         │
-│  - Generated Output            │
+│        User / Browser       │
+│                             │
+│      Writing Interface      │
+│                             │
+│  - Text Input               │
+│  - Writing Operations       │
+│  - Generation Settings      │
+│  - Generated Output         │
 └─────────────--──────────────┘
                │
                ▼
 ┌─────────────────────────────┐
-│       Next.js Backend          │
-│                                │
-│       API Route                │
-│                                │
-│  - Request Validation          │
-│  - Prompt Construction         │
-│  - AI Provider Management      │
-│  - Request Protection          │
+│       Next.js Backend       │
+│                             │
+│       API Route             │
+│                             │
+│  - Request Validation       │
+│  - Prompt Construction      │
+│  - AI Provider Management   │
+│  - Request Protection       │
 └──────-──────────────--──────┘
         │              │
         ▼              ▼
 ┌──────────────┐  ┌─────────────────┐
-│ Upstash Redis │  │   AI Providers    │
-│               │  │                   │
-│ Rate Limiting │  │ Groq              │
-│               │  │ Gemini            │
+│ Upstash Redis│  │   AI Providers  │
+│              │  │                 │
+│ Rate Limiting│  │ Groq            │
+│              │  │ Gemini          │
 └──────────────┘  └────────-────────┘
                            │
                            ▼
