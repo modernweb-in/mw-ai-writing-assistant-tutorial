@@ -1,0 +1,450 @@
+{
+    "info": {
+        "name": "Modern Web - AI Writing Assistant",
+        "description": "API testing collection for the Modern Web AI Writing Assistant tutorial. Includes generation, validation, oversized payload, and rate-limit tests.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000"
+        }
+    ],
+    "item": [
+        {
+            "name": "01 - Generation",
+            "item": [
+                {
+                    "name": "Improve writing",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"improve\",\n  \"input\": \"i am writing this email to ask about the project status\",\n  \"tone\": \"professional\",\n  \"length\": \"medium\",\n  \"outputFormat\": \"paragraphs\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 200', function () {",
+                                    "        pm.response.to.have.status(200);",
+                                    "    });",
+                                    "    if (pm.response.code === 200) {",
+                                    "        pm.test('Response contains generated content', function () {",
+                                    "            const body = pm.response.json();",
+                                    "            pm.expect(body.result).to.be.a('string').and.not.empty;",
+                                    "        });",
+                                    "    }",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Rewrite content",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"rewrite\",\n  \"input\": \"We need to finish this project quickly.\",\n  \"tone\": \"friendly\",\n  \"length\": \"short\",\n  \"outputFormat\": \"auto\"\n            }"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 200', function () {",
+                                    "        pm.response.to.have.status(200);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Summarize content",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"summarize\",\n  \"input\": \"Paste a longer article or text here.\",\n  \"tone\": \"professional\",\n  \"length\": \"short\",\n  \"outputFormat\": \"bullets\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 200', function () {",
+                                    "        pm.response.to.have.status(200);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Grammar correction",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"grammar\",\n  \"input\": \"She don't know where the documents is.\",\n  \"tone\": \"formal\",\n  \"length\": \"medium\",\n  \"outputFormat\": \"auto\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 200', function () {",
+                                    "        pm.response.to.have.status(200);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Expand content",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"expand\",\n  \"input\": \"Regular exercise improves health.\",\n  \"tone\": \"friendly\",\n  \"length\": \"long\",\n  \"outputFormat\": \"paragraphs\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 200', function () {",
+                                    "        pm.response.to.have.status(200);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Generate content",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"generate\",\n  \"input\": \"Write a short introduction for a personal portfolio website.\",\n  \"tone\": \"professional\",\n  \"length\": \"medium\",\n  \"outputFormat\": \"paragraphs\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 200', function () {",
+                                    "        pm.response.to.have.status(200);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "02 - Validation",
+            "item": [
+                {
+                    "name": "Invalid operation (expected 400)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"invalid\",\n  \"input\": \"Hello\",\n  \"tone\": \"professional\",\n  \"length\": \"medium\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 400', function () {",
+                                    "        pm.response.to.have.status(400);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Empty input (expected 400)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"improve\",\n  \"input\": \"\",\n  \"tone\": \"professional\",\n  \"length\": \"medium\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 400', function () {",
+                                    "        pm.response.to.have.status(400);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Input exceeds 12000 characters (expected 400)",
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.variables.set('longInput', 'A'.repeat(12001));"
+                                ]
+                            }
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Returns HTTP 400 for input exceeding 12000 characters', function () {",
+                                    "        pm.response.to.have.status(400);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"generate\",\n  \"input\": \"{{longInput}}\",\n  \"tone\": \"professional\",\n  \"length\": \"medium\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "03 - Request Protection",
+            "item": [
+                {
+                    "name": "Oversized request body (expected 413)",
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.variables.set('largeInput', 'A'.repeat(70 * 1024));"
+                                ]
+                            }
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit applied - wait before retrying', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Oversized payload rejected with HTTP 413', function () {",
+                                    "        pm.response.to.have.status(413);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"operation\": \"generate\",\n  \"input\": \"{{largeInput}}\",\n  \"tone\": \"professional\",\n  \"length\": \"medium\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    }
+                },
+                {
+                    "name": "Rate limit check (safe request)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{ invalid json"
+                        },
+                        "url": "{{baseUrl}}/api/generate"
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 429) {",
+                                    "    pm.test('Rate limit successfully enforced', function () {",
+                                    "        pm.response.to.have.status(429);",
+                                    "    });",
+                                    "} else {",
+                                    "    pm.test('Request reached JSON parsing - rate limit not reached yet', function () {",
+                                    "        pm.response.to.have.status(400);",
+                                    "    });",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

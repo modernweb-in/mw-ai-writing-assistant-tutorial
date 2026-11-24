@@ -1,0 +1,116 @@
+### Generate content
+
+@baseUrl = http://localhost:3000
+
+### Improve writing
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "improve",
+  "input": "i am writing this email to ask about the project status",
+  "tone": "professional",
+  "length": "medium",
+  "outputFormat": "paragraphs"
+}
+
+### Rewrite content
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "rewrite",
+  "input": "We need to finish this project quickly.",
+  "tone": "friendly",
+  "length": "short",
+  "outputFormat": "auto"
+}
+
+### Summarize content
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "summarize",
+  "input": "Paste a longer article or text here.",
+  "tone": "professional",
+  "length": "short",
+  "outputFormat": "bullets"
+}
+
+### Grammar correction
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "grammar",
+  "input": "She don't know where the documents is.",
+  "tone": "formal",
+  "length": "medium",
+  "outputFormat": "auto"
+}
+
+### Expand content
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "expand",
+  "input": "Regular exercise improves health.",
+  "tone": "friendly",
+  "length": "long",
+  "outputFormat": "paragraphs"
+}
+
+### Generate content
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "generate",
+  "input": "Write a short introduction for a personal portfolio website.",
+  "tone": "professional",
+  "length": "medium",
+  "outputFormat": "paragraphs"
+}
+
+### Generate an email
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "generate",
+  "input": "Write an email requesting a meeting with a project supervisor.",
+  "tone": "formal",
+  "length": "medium",
+  "outputFormat": "email",
+  "customInstructions": "Keep the email polite and concise."
+}
+
+### Invalid operation (expected 400)
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "invalid",
+  "input": "Hello",
+  "tone": "professional",
+  "length": "medium"
+}
+
+### Empty input (expected 400)
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "operation": "improve",
+  "input": "",
+  "tone": "professional",
+  "length": "medium"
+}
+
+### Oversized request body (expected 413)
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+< ./payloads/oversized.json
